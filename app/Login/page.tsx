@@ -13,19 +13,55 @@ import {
 } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { getSession } from 'next-auth/react';
+import { useAuthStore } from '@/store/authStore';
+
 
 export default function LoginPage() {
+    const router = useRouter();
     // states 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+
+
+
 
     // Login functionality
-    const handleLogin = (event: FormEvent<HTMLFormElement>) => {
+    const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        // Temporary: authentication will be added next.
-        console.log('Login form submitted');
+        setError('');
+        setLoading(true);
+
+        try {
+            const result = await signIn('credentials', {
+                username,
+                password,
+                redirect: false,
+            });
+            if (result?.error) {
+                setError('Ivlaid username and password');
+                return;
+            }
+            const session = await getSession();
+            if (!session?.accessToken) {
+                setError('Somthing is wrong please try again');
+                return;
+            }
+            useAuthStore.getState().setSession(session);
+            localStorage.setItem('token', session.accessToken);
+            router.push('/dashboard');
+            router.refresh();
+        } catch {
+            setError('Somthing is wrong please try again');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -73,8 +109,8 @@ export default function LoginPage() {
                     </Box>
 
                     <TextField
-                        label="Email Address"
-                        type="email"
+                        label="Username"
+                        type="text"
                         value={username}
                         onChange={(event) => setUsername(event.target.value)}
                         fullWidth
@@ -109,18 +145,24 @@ export default function LoginPage() {
                             }
                         }}
                     />
+                    {error && (
+                        <Typography color="error" variant="body2">
+                            {error}
+                        </Typography>
+                    )}
 
                     <Button
                         type="submit"
                         variant="contained"
                         size="large"
                         fullWidth
+                        disabled={loading}
                     >
-                        Sign In
+                        {loading ? "Signing in...." : "Sign in"}
                     </Button>
                 </Box>
-            </Paper>
-        </Box>
+            </Paper >
+        </Box >
     );
 }
 
