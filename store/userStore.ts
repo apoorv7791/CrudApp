@@ -1,5 +1,5 @@
-import { create } from 'zustand'
 
+import { create } from 'zustand';
 
 interface User {
     id: number;
@@ -18,26 +18,46 @@ interface User {
 interface UserState {
     users: User[];
     loading: boolean;
-    fetchUsers: () => Promise<void>;
+    limit: number;
+    total: number;
+    fetchUsers: (skip: number, query?: string) => Promise<void>;
 }
 
-export const useUserStore = create<UserState>((set) => ({
+export const useUserStore = create<UserState>((set, get) => ({
     users: [],
     loading: false,
+    limit: 10,
+    total: 0,
 
-    fetchUsers: async () => {
-        set({ loading: true })
+    fetchUsers: async (skip, query = '') => {
+        set({ loading: true });
+
         try {
-            const response = await fetch("https://dummyjson.com/users?limit=10&skip=0");
-            if (!response.ok) throw new Error("Failed to fetch users: ");
-            const result = await response.json()
+            const { limit } = get();
+
+            const endpoint = query.trim()
+                ? `https://dummyjson.com/users/search?q=${encodeURIComponent(query.trim())}&limit=${limit}&skip=${skip}`
+                : `https://dummyjson.com/users?limit=${limit}&skip=${skip}`;
+
+            const response = await fetch(endpoint);
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch users');
+            }
+
+            const result = await response.json();
+
             set({
                 users: result.users,
-                loading: false
+                total: result.total,
+                loading: false,
             });
         } catch (error) {
-            console.log("Faled to fetch users: ", error);
-            set({ loading: false });
+            console.error('Failed to fetch users:', error);
+
+            set({
+                loading: false,
+            });
         }
-    }
-}))
+    },
+}));
