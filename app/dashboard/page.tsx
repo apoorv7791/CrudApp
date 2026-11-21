@@ -1,7 +1,7 @@
 
 'use client'
 
-import { useEffect, } from 'react';
+import { useEffect } from 'react';
 import {
     Table,
     TableHead,
@@ -15,7 +15,7 @@ import { useUserStore } from '@/store/userStore';
 
 
 
-export default function dashboard() {
+export default function Dashboard() {
     const users = useUserStore((state) => state.users);
     const loading = useUserStore((state) => state.loading);
     const fetchUsers = useUserStore((state) => state.fetchUsers);
