@@ -14,6 +14,7 @@ import { useUserStore } from '@/store/userStore';
 
 import { Pagination } from '@mui/material';
 import { TextField } from '@mui/material';
+import Link from 'next/link';
 
 
 export default function Dashboard() {
@@ -58,7 +59,10 @@ export default function Dashboard() {
                     {users.map((user) => (
                         <TableRow key={user.id}>
                             <TableCell>
-                                {user.firstName} {user.lastName}
+                                <Link href={`/users/${user.id}`}>
+                                    {user.firstName} {user.lastName}
+                                </Link>
+
                             </TableCell>
                             <TableCell>
                                 {user.email}
