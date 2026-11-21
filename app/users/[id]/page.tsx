@@ -1,4 +1,4 @@
-
+// Single User 
 import Link from 'next/link'
 
 interface SingleUserProps {

@@ -1,5 +1,6 @@
 
 'use client'
+// Users Listing
 
 import { useEffect, useState } from 'react';
 import {
@@ -36,6 +37,7 @@ export default function Dashboard() {
         <Paper>
             <h1>Welcome to DashBoard</h1>
             {loading && <p>Loading users.....</p>}
+
             <TextField
                 label="Search Users"
                 value={searchQuerry}
@@ -45,6 +47,7 @@ export default function Dashboard() {
                 }}
 
             />
+            <Link href="/products">View Products</Link>
             <Table>
                 <TableHead>
                     <TableRow>
