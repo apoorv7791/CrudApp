@@ -33,6 +33,7 @@ export default function Dashboard() {
     const total = useUserStore((state) => state.total);
 
     useEffect(() => {
+        console.log('Fetching users:', skip, searchQuerry);
         fetchUsers(skip, searchQuerry);
     }, [fetchUsers, skip, searchQuerry]);
 

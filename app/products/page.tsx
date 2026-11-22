@@ -12,6 +12,7 @@ import {
     Rating
 } from '@mui/material';
 import Link from 'next/link';
+import { Button } from '@mui/material';
 
 import { useState, useEffect } from 'react';
 
@@ -120,10 +121,15 @@ const ProductDashBoard = () => {
                                 </CardContent>
                             </Card>
                         </Link>
-
                     </Grid>
+
                 ))}
             </Grid>
+            <Link href="/dashboard" style={{ textDecoration: 'none' }}>
+                <Button variant="contained">
+                    Go Back
+                </Button>
+            </Link>
             <Pagination
                 count={Math.ceil(total / limit)}
                 page={page}
