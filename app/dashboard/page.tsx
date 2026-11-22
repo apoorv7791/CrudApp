@@ -2,7 +2,7 @@
 'use client'
 // Users Listing
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, SetStateAction } from 'react';
 import {
     Table,
     TableHead,
@@ -26,11 +26,16 @@ export default function Dashboard() {
     const loading = useUserStore((state) => state.loading);
     const fetchUsers = useUserStore((state) => state.fetchUsers);
     const [page, setPage] = useState(1);
-    const [searchQuerry, setSearchQuery] = useState('');
+    const [searchQuerry, setSearchQuerry] = useState('');
 
     const limit = 10;
     const skip = (page - 1) * limit;
     const total = useUserStore((state) => state.total);
+
+    const handleSearch = useCallback((e: { target: { value: SetStateAction<string>; }; }) => {
+        setSearchQuerry(e.target.value);
+        setPage(1);
+    }, [])
 
     useEffect(() => {
         console.log('Fetching users:', skip, searchQuerry);
@@ -61,10 +66,7 @@ export default function Dashboard() {
             <TextField
                 label="Search Users"
                 value={searchQuerry}
-                onChange={(e) => {
-                    setSearchQuery(e.target.value);
-                    setPage(1);
-                }}
+                onChange={handleSearch}
 
             />
 
