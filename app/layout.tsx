@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v16-appRouter';
-
+import Providers from '@/components/Providers';
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -25,7 +25,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body>
         <AppRouterCacheProvider>
-          {children}
+          <Providers>
+            {children}
+          </Providers>
         </AppRouterCacheProvider>
 
       </body>

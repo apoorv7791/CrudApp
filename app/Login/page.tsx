@@ -104,7 +104,7 @@ export default function LoginPage() {
                             color="text.secondary"
                             sx={{ mt: 1 }}
                         >
-                            Sign in to your account
+                            Login in to your account
                         </Typography>
                     </Box>
 
@@ -158,7 +158,7 @@ export default function LoginPage() {
                         fullWidth
                         disabled={loading}
                     >
-                        {loading ? "Signing in...." : "Sign in"}
+                        {loading ? "Logging in...." : "Log in"}
                     </Button>
                 </Box>
             </Paper >

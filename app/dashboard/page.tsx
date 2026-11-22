@@ -12,10 +12,13 @@ import {
     Paper
 } from '@mui/material';
 import { useUserStore } from '@/store/userStore';
-
+import { Button } from '@mui/material';
 import { Pagination } from '@mui/material';
 import { TextField } from '@mui/material';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 
 
 export default function Dashboard() {
@@ -32,6 +35,22 @@ export default function Dashboard() {
     useEffect(() => {
         fetchUsers(skip, searchQuerry);
     }, [fetchUsers, skip, searchQuerry]);
+
+
+    const { status } = useSession();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (status === 'unauthenticated') {
+            router.replace('/login');
+        }
+    }, [status, router]);
+    if (status === 'loading') {
+        return <p>Checking Authentication....</p>
+    }
+    if (status === 'unauthenticated') {
+        return <p>Redirecting to Login....</p>
+    }
     return (
 
         <Paper>
@@ -47,7 +66,22 @@ export default function Dashboard() {
                 }}
 
             />
-            <Link href="/products">View Products</Link>
+
+            <Link href="/products" style={{ textDecoration: 'none' }}>
+                <Button variant="contained">
+                    View Products
+                </Button>
+            </Link>
+            <Button
+                variant="outlined"
+                color="error"
+                onClick={() => {
+                    localStorage.removeItem('token');
+                    signOut({ callbackUrl: '/login' });
+                }}
+            >
+                Logout
+            </Button>
             <Table>
                 <TableHead>
                     <TableRow>

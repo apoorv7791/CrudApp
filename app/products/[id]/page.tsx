@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import ProductImageCarousel from '@/components/ProductImageCarousel';
-
+import { Button } from '@mui/material';
 interface SingleProductsProps {
     params: Promise<{
         id: string;
@@ -26,7 +26,23 @@ const SingleProducts = async ({ params }: SingleProductsProps) => {
             <h2>Name: {result.title}</h2>
             <h2>Price: {result.price}</h2>
             <h2>Category: {result.category}</h2>
-            <Link href={'/products'}>Go Back</Link>
+            <h1>Description: {result.description}</h1>
+
+            <h2>Product Specifications</h2>
+
+            <p>Brand: {result.brand}</p>
+            <p>Stock: {result.stock}</p>
+            <p>SKU: {result.sku}</p>
+            <p>Weight: {result.weight}</p>
+            <p>Warranty: {result.warrantyInformation}</p>
+            <p>Shipping: {result.shippingInformation}</p>
+            <p>Availability: {result.availabilityStatus}</p>
+            <p>Minimum Order Quantity: {result.minimumOrderQuantity}</p>
+            <Link href="/products" style={{ textDecoration: 'none' }}>
+                <Button variant="contained">
+                    Go Back
+                </Button>
+            </Link>
         </>
 
     )

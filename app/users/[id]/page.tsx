@@ -1,6 +1,6 @@
 // Single User 
 import Link from 'next/link'
-
+import { Button } from '@mui/material';
 interface SingleUserProps {
     params: Promise<{
         id: string;
@@ -31,7 +31,11 @@ const SingleUser = async ({ params }: SingleUserProps) => {
             <h2>Title: {result.company.title}</h2>
             <h2>Department: {result.company.department}</h2>
 
-            <Link href={'/dashboard'}>Go Back </Link>
+            <Link href="/dashboard" style={{ textDecoration: 'none' }}>
+                <Button variant="contained">
+                    Go Back
+                </Button>
+            </Link>
         </div>
     )
 }
