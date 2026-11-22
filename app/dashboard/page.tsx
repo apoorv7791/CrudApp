@@ -19,7 +19,7 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
-
+import { useAuthStore } from '@/store/authStore';
 
 export default function Dashboard() {
     const users = useUserStore((state) => state.users);
@@ -76,6 +76,7 @@ export default function Dashboard() {
                 variant="outlined"
                 color="error"
                 onClick={() => {
+                    useAuthStore.getState().logout();
                     localStorage.removeItem('token');
                     signOut({ callbackUrl: '/login' });
                 }}

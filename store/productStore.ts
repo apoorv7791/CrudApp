@@ -26,7 +26,7 @@ export const useProductStore = create<ProductState>((set, get) => ({
     loading: false,
     limit: 10,
     total: 0,
-    fetchProducts: async (skip, query = '', category = ' ') => {
+    fetchProducts: async (skip, query = '', category = '') => {
         set({ loading: true });
 
         try {

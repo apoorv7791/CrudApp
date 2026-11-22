@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HELP STUDY ABROAD – Frontend Assessment
+
+A responsive web application built using Next.js, TypeScript, Material UI, and Zustand. The application provides authentication, user management, and product management using the DummyJSON REST API.
+
+## Tech Stack
+
+- Next.js 16
+- TypeScript
+- Material UI (MUI)
+- Zustand
+- NextAuth.js
+- DummyJSON REST API
+
+## Features
+
+### Authentication
+- Login using DummyJSON authentication API.
+- Authentication handled through NextAuth.js.
+- Zustand manages authentication state.
+- Protected dashboard with logout functionality.
+
+### User Management
+- Fetch and display users.
+- Search users by query.
+- Server-side pagination using API limit and skip.
+- View individual user details.
+
+### Product Management
+- Fetch and display products.
+- Search products.
+- Filter products by category.
+- Server-side pagination.
+- View individual product details.
+- Image carousel for product images.
+
+## State Management – Zustand
+
+Zustand is used for global state management.
+
+It was chosen over Redux because:
+
+- **Simplicity:** Minimal boilerplate and an easy-to-understand API.
+- **Lightweight:** Small library with low overhead.
+- **Async support:** Asynchronous API calls can be handled directly inside store actions without additional middleware.
+- **Maintainability:** Separate stores for authentication, users, and products keep the application organized.
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/apoorv7791/CrudApp.git
+```
+
+### 2. Navigate to the project
+
+```bash
+cd crudapp
+```
+
+### 3. Install dependencies
+
+```bash
+npm install
+```
+
+### 4. Configure environment variables
+
+Create a `.env.local` file in the project root and add the environment variables required by the application.
+
+### 5. Start the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## API
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project uses [DummyJSON](https://dummyjson.com/) for authentication, users, and products.
 
-## Learn More
+- Authentication: `/auth/login`
+- Users: `/users`
+- Products: `/products`
 
-To learn more about Next.js, take a look at the following resources:
+## Author
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Developed as part of the HELP STUDY ABROAD Frontend Development Assessment.
