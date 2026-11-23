@@ -1,43 +1,48 @@
-'use client'
+
+'use client';
+
 import {
     Grid,
-    Card,
-    CardContent,
-    CardMedia,
     Typography,
     MenuItem,
     FormControl,
     InputLabel,
     Select,
-    Rating
+    Button,
+    Pagination,
+    TextField
 } from '@mui/material';
-import Link from 'next/link';
-import { Button } from '@mui/material';
 
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
-import { Pagination, TextField } from '@mui/material';
 import { useProductStore } from '@/store/productStore';
+import ProductCards from '@/components/ProductCards';
 
 const ProductDashBoard = () => {
-
     const [page, setPage] = useState(1);
     const [searchQuerry, setSearchQuery] = useState('');
+    const [category, setCategory] = useState('');
+
     const productsList = useProductStore((state) => state.products);
     const loading = useProductStore((state) => state.loading);
     const fetchProducts = useProductStore((state) => state.fetchProducts);
     const total = useProductStore((state) => state.total);
     const limit = useProductStore((state) => state.limit);
-    const [category, setCategory] = useState('');
-    const skip = (page - 1) * limit
+
+    const skip = (page - 1) * limit;
+
     useEffect(() => {
         fetchProducts(skip, searchQuerry, category);
     }, [fetchProducts, skip, searchQuerry, category]);
-    return (
 
+    return (
         <>
-            <h1>Products DashBoard</h1>
-            {loading && <Typography>Loading products...</Typography>}
+            <h1>Products Dashboard</h1>
+
+            {loading && (
+                <Typography>Loading products...</Typography>
+            )}
 
             <FormControl sx={{ minWidth: 200, mb: 3 }}>
                 <InputLabel id="category-label">
@@ -71,70 +76,34 @@ const ProductDashBoard = () => {
                     setSearchQuery(e.target.value);
                     setPage(1);
                 }}
-
             />
+
             <Grid container spacing={3}>
                 {productsList.map((product) => (
                     <Grid
                         key={product.id}
                         size={{ xs: 12, sm: 6, md: 4 }}
                     >
-
-                        <Link
-                            href={`/products/${product.id}`}
-                            style={{ textDecoration: 'none', color: 'inherit' }}
-                        >
-                            <Card sx={{ height: '100%' }}>
-
-                                <CardMedia
-                                    component="img"
-                                    height="180"
-                                    image={product.images?.[0] ?? product.thumbnail}
-                                    alt={product.title}
-                                    sx={{
-                                        objectFit: 'contain',
-                                        p: 2
-                                    }}
-                                />
-
-                                <CardContent>
-                                    <Typography variant="h6">
-                                        {product.title}
-                                    </Typography>
-
-                                    <Typography variant="body1">
-                                        Price: ${product.price}
-                                    </Typography>
-
-                                    <Typography variant="body2">
-                                        Category: {product.category}
-                                    </Typography>
-                                    <Rating
-                                        value={product.rating}
-                                        precision={0.1}
-                                        readOnly
-                                    />
-
-                                    <Typography variant="body2">
-                                        View Product
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Link>
+                        <ProductCards product={product} />
                     </Grid>
-
                 ))}
             </Grid>
+
             <Link href="/dashboard" style={{ textDecoration: 'none' }}>
                 <Button variant="contained">
                     Go Back
                 </Button>
             </Link>
+
             <Pagination
                 count={Math.ceil(total / limit)}
                 page={page}
                 onChange={(event, value) => setPage(value)}
-                sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}
+                sx={{
+                    mt: 4,
+                    display: 'flex',
+                    justifyContent: 'center'
+                }}
             />
         </>
     );

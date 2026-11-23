@@ -1,6 +1,13 @@
 // Single User 
 import Link from 'next/link'
-import { Button } from '@mui/material';
+import {
+    Box,
+    Card,
+    CardContent,
+    Typography,
+    Button,
+    Divider
+} from '@mui/material';
 interface SingleUserProps {
     params: Promise<{
         id: string;
@@ -21,22 +28,63 @@ const SingleUser = async ({ params }: SingleUserProps) => {
     console.log(result);
 
     return (
-        <div>
-            <h1>Welcome User: {id}</h1>
-            <h2>Name: {result.firstName} {result.lastName}</h2>
-            <h2>Emailt: {result.email}</h2>
-            <h2>Gender: {result.gender}</h2>
-            <h2>Phone-Number: {result.phone}</h2>
-            <h2>Company: {result.company.name}</h2>
-            <h2>Title: {result.company.title}</h2>
-            <h2>Department: {result.company.department}</h2>
+        <Box
+            sx={{
+                maxWidth: 600,
+                mx: 'auto',
+                px: 2,
+                py: 4
+            }}
+        >
+            <Card elevation={3}>
+                <CardContent sx={{ p: { xs: 2, sm: 4 } }}>
+                    <Typography variant='h5' gutterBottom>
+                        User Details
+                    </Typography>
+                    <Typography color="text.secondary" sx={{ mb: 3 }}>
+                        User ID: {id}
+                    </Typography>
 
-            <Link href="/dashboard" style={{ textDecoration: 'none' }}>
-                <Button variant="contained">
-                    Go Back
-                </Button>
-            </Link>
-        </div>
+                    <Typography variant="h5" gutterBottom>
+                        {result.firstName} {result.lastName}
+                    </Typography>
+
+                    <Divider sx={{ my: 2 }} />
+
+                    <Typography sx={{ mb: 1 }}>
+                        <strong>Gender:</strong> {result.gender}
+                    </Typography>
+
+                    <Typography sx={{ mb: 1 }}>
+                        <strong>Phone:</strong> {result.phone}
+                    </Typography>
+
+                    <Typography variant="body1" sx={{ mb: 1 }}>
+                        <strong>Email:</strong> {result.email}
+                    </Typography>
+                    <Divider sx={{ my: 2 }} />
+
+                    <Typography variant="body1" sx={{ mb: 1 }}>
+                        Company Information
+                    </Typography>
+                    <Typography variant="body1" sx={{ mb: 1 }}>
+                        <strong>Company:</strong> {result.company.name}
+                    </Typography>
+                    <Typography variant="body1" sx={{ mb: 1 }}>
+                        <strong>Title:</strong> {result.company.title}
+                    </Typography>
+                    <Typography variant="body1" sx={{ mb: 1 }}>
+                        <strong>Department:</strong>{result.company.department}
+                    </Typography>
+
+                    <Link href="/dashboard" style={{ textDecoration: 'none' }}>
+                        <Button variant="contained">
+                            Back to Users
+                        </Button>
+                    </Link>
+                </CardContent>
+            </Card>
+        </Box>
     )
 }
 
