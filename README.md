@@ -24,6 +24,7 @@ A responsive web application built using Next.js, TypeScript, Material UI, and Z
 - Search users by query.
 - Server-side pagination using API limit and skip.
 - View individual user details.
+- In-memory caching using Zustand to avoid repeated API requests.
 
 ### Product Management
 - Fetch and display products.
@@ -32,6 +33,7 @@ A responsive web application built using Next.js, TypeScript, Material UI, and Z
 - Server-side pagination.
 - View individual product details.
 - Image carousel for product images.
+- In-memory caching using Zustand to avoid repeated API requests.
 
 ## State Management – Zustand
 
@@ -55,7 +57,7 @@ git clone https://github.com/apoorv7791/CrudApp.git
 ### 2. Navigate to the project
 
 ```bash
-cd crudapp
+cd CrudApp
 ```
 
 ### 3. Install dependencies
@@ -68,13 +70,28 @@ npm install
 
 Create a `.env.local` file in the project root and add the environment variables required by the application.
 
+For example, if your NextAuth configuration uses these variables:
+
+```env
+NEXTAUTH_SECRET=your_generated_secret
+NEXTAUTH_URL=http://localhost:3000
+```
+
+Generate a secret using:
+
+```bash
+openssl rand -base64 32
+```
+
+Do not commit `.env.local` or expose your secret values.
+
 ### 5. Start the development server
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open http://localhost:3000 in your browser.
 
 ## API
 
